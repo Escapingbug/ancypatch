@@ -43,16 +43,16 @@ cd unicorn && ./make.sh
 
 echo
 echo "[*] Installing projects and Python bindings (using sudo)"
-cd "$build/keystone/build" && sudo make install
-cd "$build/keystone/bindings/python" && sudo make install
+cd "$build/keystone/build" && make install
+cd "$build/keystone/bindings/python" && make install
 
-cd "$build/capstone" && sudo make install
-cd "$build/capstone/bindings/python" && sudo make install
+cd "$build/capstone" && make install
+cd "$build/capstone/bindings/python" && make install
 
-cd "$build/unicorn" && sudo ./make.sh install
-cd "$build/unicorn/bindings/python" && sudo make install
+cd "$build/unicorn" && ./make.sh install
+cd "$build/unicorn/bindings/python" && make install
 
-which ldconfig &>/dev/null && sudo ldconfig
+which ldconfig &>/dev/null && ldconfig
 
 echo
 echo "All done!"
