@@ -12,6 +12,11 @@ def pfcol(s):
     return '[\033[1m\033[32m%s\033[0m] ' % s
 
 class Context(object):
+    """Context class
+
+    The Context class to be transfered to user's function as `pt` to provide
+    utilities and data
+    """
     def __init__(self, binary, verbose=False):
         self.binary = binary
         self.verbose = verbose
@@ -132,12 +137,46 @@ class Context(object):
     # patch API below
 
     def asm(self, asm, addr=0, att_syntax=False):
+        """assembles content
+
+        Args:
+          asm (str):  things to be assembled
+          addr (int): address TODO: what address exactly?
+          att_syntax (bool): use AT&T syntax or not
+
+        Returns:
+          str: the assembled code
+
+        """
         return self.arch.asm(asm, addr=addr, att_syntax=att_syntax)
 
     def dis(self, addr, size=64):
+        """disassembles content
+
+        disassembles some content at some address of given size
+
+        Args:
+          addr (int): address to disassemble
+          size (int): how many bytes to disassemble, default to 64
+
+        Returns:
+          str: disassembled content
+
+        """
         return self.arch.dis(self.elf.read(addr, size), addr)
 
     def disiter(self, addr):
+        """disassembles content returns iterator
+
+        disassembles content but returns iterator so we can move on till the end
+
+        Args:
+          addr (int): the address to start disassemble
+
+        Returns:
+          Iterator: the iterator containing the disassembled content
+
+        """
         # TODO: handle reading past the end
         dis = self.dis(addr, 128)
         while True:
@@ -150,15 +189,55 @@ class Context(object):
             dis = self.dis(addr, 128)
 
     def irdis(self, addr, size=64):
+        """disassembles content and returns IR representation
+
+        Args:
+          addr (int): address to disassemble
+          size (int): how many bytes to disassemble, default to 64
+
+        Returns:
+          IR: IR class(util.patch.IR) representing the disassembled content
+
+        """
         return irdis(self.dis(addr, size))
 
     def irstream(self, addr):
+        """disassembles content and turns into an IRStream
+
+        Args:
+          addr (int): address to disassemble
+
+        Returns:
+          IRStream: IRStream class(util.patch.IRStream)
+
+        """
         return IRStream(self.disiter(addr))
 
     def ir(self, asm, **kwargs):
+        """wraps an asm to IR representation
+
+        Args:
+          asm (str): asm content
+        
+        Kwargs:
+          * : Just arguments to be sent to asm function
+
+        Returns:
+          IR: IR representation
+
+        """
         return irdis(self.arch.dis(self.asm(asm, **kwargs), addr=kwargs.get('addr', 0)))
 
     def make_writable(self, addr):
+        """makes a segment of some address writable
+
+        Args:
+          addr (int): address of that segment
+
+        Returns:
+          None
+
+        """
         for prog in self.elf.progs:
             if prog.isload:
                 if addr in prog and prog.flags & 2 == 0:
@@ -166,6 +245,15 @@ class Context(object):
                     prog.flags |= 2
 
     def search(self, data):
+        """searches some data
+
+        Args:
+          addr (str): data to search
+
+        Returns:
+          int: address of that data
+
+        """
         tmp = data
         if len(data) > 10:
             tmp = data[:8] + '..'
@@ -182,6 +270,18 @@ class Context(object):
         self.error(pfcol('SEARCH') + '"%s" not found.' % tmp)
 
     def hook(self, src, dst, first=False, noentry=False):
+        """hooks some address, inject user-defined code
+
+        Args:
+          src (int | entry): hooking address, you can also use Context.entry to hook the entry point
+          dst (int): where to force the hooked address go
+          first (bool): ? TODO
+          noentry (bool): ? TODO
+
+        Returns:
+          int: hooked address
+
+        """
         # hooking the entry point is a special, more efficient case
         if src == self.entry and not noentry:
             if first:
@@ -286,6 +386,20 @@ class Context(object):
         return raw, typ
 
     def inject(self, **kwargs):
+        """injects user-defind code
+
+        Kwargs:
+          internal (bool): ? TODO
+          is_asm (bool): is the content assembling lang
+          mark_func (bool): ? TODO
+          size (int): how many size to inject
+          target (str): ? TODO
+          desc (str): ? injected code?
+
+        Returns:
+          int: injected address
+
+        """
         internal = kwargs.get('internal', False)
         is_asm = kwargs.get('is_asm', False)
         mark_func = kwargs.get('mark_func', False)
@@ -328,6 +442,16 @@ class Context(object):
             return addr
 
     def patch(self, addr, **kwargs):
+        """patches an address with user-defined data
+
+        KwArgs:
+          desc (str): data to patch
+          is_asm (bool): is data assembling
+
+        Returns:
+          None
+
+        """
         raw, typ = self._compile(addr, **kwargs)
         desc = kwargs.get('desc', '')
         if desc:
@@ -361,10 +485,23 @@ class Context(object):
         self.elf.write(addr, raw)
 
     def resolve(self, sym):
+        """resolves a symbol
+
+        Args:
+          sym (str): symbol to resolve
+
+        Returns:
+          int: ? TODO possibly the resolved address?
+
+        """
         return self.binary.linker.resolve(sym)
 
     def declare(self, symbols=None, headers='', source=''):
+        """? TODO
+        """
         self.binary.linker.declare(symbols, headers, source)
 
     def final(self, cb):
+        """? TODO
+        """
         self.binary.final(cb)

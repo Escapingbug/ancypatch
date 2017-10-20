@@ -1,5 +1,7 @@
-patchkit
-----
+ancypatch
+----------
+A forked verson of origial patchkit, means to be more easy to install and contains more documentation.
+
 Patches an ELF binary using one or more simple Python scripts.
 
 Usage:
@@ -46,18 +48,8 @@ Replacing a C function:
 
 API
 ----
-    addr = search(data)
-    hook(addr, new_addr)
-    patch(addr, *compile arg*)
-    addr = inject(*compile arg*)
 
-    *compile arg* is any of the following:
-      raw='data'
-      hex='0bfe'
-      asm='nop'
-      jmp=0xaddr
-      c='void func() { int a; a = 1; }' (only supported on inject, not patch)
-
+see doc page(TODO)
 
 IDA scripts
 ----
