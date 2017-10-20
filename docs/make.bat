@@ -8,7 +8,7 @@ if "%SPHINXBUILD%" == "" (
 	set SPHINXBUILD=python -msphinx
 )
 set SOURCEDIR=.
-set BUILDDIR=.build
+set BUILDDIR=_build
 set SPHINXPROJ=ancypatch
 
 if "%1" == "" goto help

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # ancypatch documentation build configuration file, created by
-# sphinx-quickstart on Thu Oct 19 19:21:49 2017.
+# sphinx-quickstart on Fri Oct 20 20:45:40 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -19,8 +19,7 @@
 #
 import os
 import sys
-sys.path.insert(0, os.path.abspath('.'))
-sys.path.insert(0, os.path.abspath('./path'))
+sys.path.insert(0, os.path.abspath('../'))
 
 
 # -- General configuration ------------------------------------------------
@@ -33,10 +32,12 @@ sys.path.insert(0, os.path.abspath('./path'))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = ['sphinx.ext.autodoc',
-    'sphinx.ext.napoleon', # google doc style support
+    'sphinx.ext.napoleon', # google style doc
     'sphinx.ext.doctest',
-    'sphinx.ext.intersphinx',
+#    'sphinx.ext.intersphinx',
+    'sphinx.ext.todo',
     'sphinx.ext.coverage',
+    'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages']
 
@@ -52,8 +53,9 @@ napoleon_use_ivar = False
 napoleon_use_param = True
 napoleon_use_rtype = True
 
+
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['.templates']
+templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
@@ -66,8 +68,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'ancypatch'
-copyright = '2017, Anciety lunixbochs'
-author = 'Anciety lunixbochs'
+copyright = '2017, Anciety'
+author = 'Anciety'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -88,13 +90,13 @@ language = None
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This patterns also effect to html_static_path and html_extra_path
-exclude_patterns = ['.build', 'Thumbs.db', '.DS_Store']
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
-todo_include_todos = False
+todo_include_todos = True
 
 
 # -- Options for HTML output ----------------------------------------------
@@ -113,7 +115,7 @@ html_theme = 'alabaster'
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['.static']
+html_static_path = ['_static']
 
 # Custom sidebar templates, must be a dictionary that maps document names
 # to template names.
@@ -162,7 +164,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'ancypatch.tex', 'ancypatch Documentation',
-     'Anciety lunixbochs', 'manual'),
+     'Anciety', 'manual'),
 ]
 
 

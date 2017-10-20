@@ -282,7 +282,12 @@
         <span class="k">for</span> <span class="n">prog</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">elf</span><span class="o">.</span><span class="n">progs</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">prog</span><span class="o">.</span><span class="n">isload</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">addr</span> <span class="ow">in</span> <span class="n">prog</span> <span class="ow">and</span> <span class="n">prog</span><span class="o">.</span><span class="n">flags</span> <span class="o">&amp;</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;[!] Segment made writable: 0x</span><span class="si">%x</span><span class="s1">-0x</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prog</span><span class="o">.</span><span class="n">vaddr</span><span class="p">,</span> <span class="n">prog</span><span class="o">.</span><span class="n">vaddr</span> <span class="o">+</span> <span class="n">prog</span><span class="o">.</span><span class="n">memsz</span><span class="p">))</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                        <span class="s1">&#39;[!] Segment made writable: 0x</span><span class="si">{}</span><span class="s1">-0x</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="nb">hex</span><span class="p">(</span><span class="n">prog</span><span class="o">.</span><span class="n">vaddr</span><span class="p">),</span> 
+                            <span class="nb">hex</span><span class="p">(</span><span class="n">prog</span><span class="o">.</span><span class="n">vaddr</span> <span class="o">+</span> <span class="n">prog</span><span class="o">.</span><span class="n">memsz</span><span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
                     <span class="n">prog</span><span class="o">.</span><span class="n">flags</span> <span class="o">|=</span> <span class="mi">2</span></div>
 
 <div class="viewcode-block" id="Context.search"><a class="viewcode-back" href="../../index.html#core.context.Context.search">[docs]</a>    <span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
@@ -528,11 +533,13 @@
 <div class="viewcode-block" id="Context.resolve"><a class="viewcode-back" href="../../index.html#core.context.Context.resolve">[docs]</a>    <span class="k">def</span> <span class="nf">resolve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sym</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;resolves a symbol</span>
 
+<span class="sd">        This function intends to inject a symbol function to the original binary</span>
+
 <span class="sd">        Args:</span>
 <span class="sd">          sym (str): symbol to resolve</span>
 
 <span class="sd">        Returns:</span>
-<span class="sd">          int: ? TODO possibly the resolved address?</span>
+<span class="sd">          int: injected address in the binary</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">linker</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span></div>
@@ -588,7 +595,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2017, Anciety lunixbochs.
+      &copy;2017, Anciety.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>

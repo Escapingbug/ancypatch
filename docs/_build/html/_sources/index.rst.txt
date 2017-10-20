@@ -30,13 +30,6 @@ Welcome to ancypatch's documentation!
    .. automethod:: final(cb)
 
 
-
-.. module:: core.binary
-
-.. autoclass:: Binary
-    
-
-
 Indices and tables
 ==================
 
