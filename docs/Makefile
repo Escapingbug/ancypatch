@@ -6,7 +6,7 @@ SPHINXOPTS    =
 SPHINXBUILD   = python -msphinx
 SPHINXPROJ    = ancypatch
 SOURCEDIR     = .
-BUILDDIR      = build
+BUILDDIR      = gendocs
 
 # Put it first so that "make" without argument is like "make help".
 help:
