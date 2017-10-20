@@ -241,7 +241,12 @@ class Context(object):
         for prog in self.elf.progs:
             if prog.isload:
                 if addr in prog and prog.flags & 2 == 0:
-                    self.debug('[!] Segment made writable: 0x%x-0x%x' % (prog.vaddr, prog.vaddr + prog.memsz))
+                    self.debug(
+                        '[!] Segment made writable: 0x{}-0x{}'.format(
+                            hex(prog.vaddr), 
+                            hex(prog.vaddr + prog.memsz)
+                        )
+                    )
                     prog.flags |= 2
 
     def search(self, data):
@@ -487,11 +492,13 @@ class Context(object):
     def resolve(self, sym):
         """resolves a symbol
 
+        This function intends to inject a symbol function to the original binary
+
         Args:
           sym (str): symbol to resolve
 
         Returns:
-          int: ? TODO possibly the resolved address?
+          int: injected address in the binary
 
         """
         return self.binary.linker.resolve(sym)
