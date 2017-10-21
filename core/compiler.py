@@ -87,6 +87,17 @@ def clean(asm):
 
 compiler_version = None
 def compile(code, linker, syms=()):
+    """uses global compiler(gcc or clang) to compile
+
+    Args:
+      code (str): code to compile
+      linker (Linker): linker object
+      syms (?): ? TODO
+    
+    Returns:
+      str: compile generated assembling code
+
+    """
     global compiler_version
     cflags = ['-mno-sse', '-Os', '-std=c99', '-fno-pic', '-ffreestanding', '-fno-stack-protector']
 
@@ -99,7 +110,9 @@ def compile(code, linker, syms=()):
     if linker.cflags:
         cflags += shlex.split(linker.cflags)
 
+    # linker's pre-hook called before compile
     code = linker.pre(code, syms=syms)
+    # use subprocess to open gcc for compiling
     p = subprocess.Popen(['gcc', '-xc', '-S', '-o-', '-'] + cflags, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     asm, err = p.communicate(code)
     if 'error:' in err.lower():
@@ -107,6 +120,7 @@ def compile(code, linker, syms=()):
     elif err:
         print err
 
+    # linker's post-hook called after compile
     asm = linker.post(asm, syms=syms)
     asm = clean(asm)
     return asm
