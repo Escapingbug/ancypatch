@@ -18,8 +18,11 @@ class Context(object):
     utilities and data
 
     Available property:
+
       arch (Arch): Arch object of current arch used
+
       elf (ELFFile): ELFFile object representing current binary
+
       entry (int): entry point address
 
     """
@@ -406,7 +409,7 @@ class Context(object):
     def inject(self, **kwargs):
         """injects user-defind code
 
-        Kwargs:
+        Args:
           raw (str): the data to inject when injecting raw bytes
           asm (str): the assembly to inject when injecting assembly
           c (str): the C code to inject when injecting C code

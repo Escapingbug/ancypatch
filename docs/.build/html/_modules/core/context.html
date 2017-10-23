@@ -59,8 +59,11 @@
 <span class="sd">    utilities and data</span>
 
 <span class="sd">    Available property:</span>
+
 <span class="sd">      arch (Arch): Arch object of current arch used</span>
+
 <span class="sd">      elf (ELFFile): ELFFile object representing current binary</span>
+
 <span class="sd">      entry (int): entry point address</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -447,7 +450,7 @@
 <div class="viewcode-block" id="Context.inject"><a class="viewcode-back" href="../../index.html#core.context.Context.inject">[docs]</a>    <span class="k">def</span> <span class="nf">inject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;injects user-defind code</span>
 
-<span class="sd">        Kwargs:</span>
+<span class="sd">        Args:</span>
 <span class="sd">          raw (str): the data to inject when injecting raw bytes</span>
 <span class="sd">          asm (str): the assembly to inject when injecting assembly</span>
 <span class="sd">          c (str): the C code to inject when injecting C code</span>

@@ -48,12 +48,12 @@
 <dd><p>Context class</p>
 <p>The Context class to be transfered to user’s function as <cite>pt</cite> to provide
 utilities and data</p>
-<dl class="docutils">
-<dt>Available property:</dt>
-<dd>arch (Arch): Arch object of current arch used
-elf (ELFFile): ELFFile object representing current binary
-entry (int): entry point address</dd>
-</dl>
+<p>Available property:</p>
+<blockquote>
+<div><p>arch (Arch): Arch object of current arch used</p>
+<p>elf (ELFFile): ELFFile object representing current binary</p>
+<p>entry (int): entry point address</p>
+</div></blockquote>
 <dl class="method">
 <dt id="core.context.Context.asm">
 <code class="descname">asm</code><span class="sig-paren">(</span><em>asm</em>, <em>addr</em>, <em>att_syntax=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.asm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.asm" title="Permalink to this definition">¶</a></dt>
@@ -260,26 +260,29 @@ entry (int): entry point address</dd>
 <dt id="core.context.Context.inject">
 <code class="descname">inject</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>c</em>, <em>internal</em>, <em>is_asm</em>, <em>mark_func</em>, <em>size</em>, <em>target</em>, <em>desc</em>, <em>silent</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.inject" title="Permalink to this definition">¶</a></dt>
 <dd><p>injects user-defind code</p>
-<dl class="docutils">
-<dt>Kwargs:</dt>
-<dd>raw (str): the data to inject when injecting raw bytes
-asm (str): the assembly to inject when injecting assembly
-c (str): the C code to inject when injecting C code
-internal (bool): ? TODO
-is_asm (bool): is the content assembling lang
-mark_func (bool): ? TODO
-size (int): how many size to inject
-target (str): ? TODO
-desc (str): descritpion of the data to inject
-silent (bool): silent mode</dd>
-</dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">injected address</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>raw</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the data to inject when injecting raw bytes</li>
+<li><strong>asm</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the assembly to inject when injecting assembly</li>
+<li><strong>c</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the C code to inject when injecting C code</li>
+<li><strong>internal</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – ? TODO</li>
+<li><strong>is_asm</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – is the content assembling lang</li>
+<li><strong>mark_func</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – ? TODO</li>
+<li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – how many size to inject</li>
+<li><strong>target</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – ? TODO</li>
+<li><strong>desc</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – descritpion of the data to inject</li>
+<li><strong>silent</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – silent mode</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)">int</a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">injected address</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)">int</a></p>
+</td>
 </tr>
 </tbody>
 </table>

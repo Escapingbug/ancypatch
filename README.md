@@ -49,7 +49,7 @@ Replacing a C function:
 API
 ----
 
-see doc page(TODO)
+see [documentation page](http://anciety.cn/ancypatch/index.html)
 
 IDA scripts
 ----
@@ -74,3 +74,7 @@ Dependencies
   - Capstone Engine - https://github.com/aquynh/capstone.git
   - Keystone Engine - https://github.com/keystone-engine/keystone.git
   - Unicorn Engine  - https://github.com/unicorn-engine/unicorn.git
+
+Notice
+-------
+This project has just been forked, some documentation may be wrong since the code is a little bit tricky to read, truly. And I feel sorry when I make mistakes, you are welcome to raise an issue if that happens. :)
