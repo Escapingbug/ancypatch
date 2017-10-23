@@ -48,6 +48,12 @@
 <dd><p>Context class</p>
 <p>The Context class to be transfered to user’s function as <cite>pt</cite> to provide
 utilities and data</p>
+<dl class="docutils">
+<dt>Available property:</dt>
+<dd>arch (Arch): Arch object of current arch used
+elf (ELFFile): ELFFile object representing current binary
+entry (int): entry point address</dd>
+</dl>
 <dl class="method">
 <dt id="core.context.Context.asm">
 <code class="descname">asm</code><span class="sig-paren">(</span><em>asm</em>, <em>addr</em>, <em>att_syntax=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.asm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.asm" title="Permalink to this definition">¶</a></dt>
@@ -227,13 +233,13 @@ utilities and data</p>
 <dl class="method">
 <dt id="core.context.Context.hook">
 <code class="descname">hook</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em>, <em>first=False</em>, <em>noentry=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.hook" title="Permalink to this definition">¶</a></dt>
-<dd><p>hooks some address, inject user-defined code</p>
+<dd><p>hooks some address to redirect to user-defined address</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>src</strong> (<em>int | entry</em>) – hooking address, you can also use Context.entry to hook the entry point</li>
+<li><strong>src</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – hooking address, you can also use Context.entry to hook the entry point</li>
 <li><strong>dst</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – where to force the hooked address go</li>
 <li><strong>first</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – ? TODO</li>
 <li><strong>noentry</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#bool" title="(in Python v2.7)"><em>bool</em></a>) – ? TODO</li>
@@ -252,16 +258,20 @@ utilities and data</p>
 
 <dl class="method">
 <dt id="core.context.Context.inject">
-<code class="descname">inject</code><span class="sig-paren">(</span><span class="optional">[</span><em>internal</em>, <em>is_asm</em>, <em>mark_func</em>, <em>size</em>, <em>target</em>, <em>desc</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.inject" title="Permalink to this definition">¶</a></dt>
+<code class="descname">inject</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>c</em>, <em>internal</em>, <em>is_asm</em>, <em>mark_func</em>, <em>size</em>, <em>target</em>, <em>desc</em>, <em>silent</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.inject" title="Permalink to this definition">¶</a></dt>
 <dd><p>injects user-defind code</p>
 <dl class="docutils">
 <dt>Kwargs:</dt>
-<dd>internal (bool): ? TODO
+<dd>raw (str): the data to inject when injecting raw bytes
+asm (str): the assembly to inject when injecting assembly
+c (str): the C code to inject when injecting C code
+internal (bool): ? TODO
 is_asm (bool): is the content assembling lang
 mark_func (bool): ? TODO
 size (int): how many size to inject
 target (str): ? TODO
-desc (str): ? injected code?</dd>
+desc (str): descritpion of the data to inject
+silent (bool): silent mode</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -277,12 +287,15 @@ desc (str): ? injected code?</dd>
 
 <dl class="method">
 <dt id="core.context.Context.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><em>desc</em><span class="optional">[</span>, <em>is_asm</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.patch" title="Permalink to this definition">¶</a></dt>
+<code class="descname">patch</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>desc</em>, <em>is_asm</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>patches an address with user-defined data</p>
 <dl class="docutils">
 <dt>KwArgs:</dt>
-<dd>desc (str): data to patch
-is_asm (bool): is data assembling</dd>
+<dd>raw (str): the data to patch when patching raw bytes
+asm (str): the assembly to patch when patching assembly
+desc (str): description of the data to patch
+is_asm (bool): is data assembling
+silent (bool): silent mode</dd>
 </dl>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -303,7 +316,7 @@ is_asm (bool): is data assembling</dd>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sym</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – symbol to resolve</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sym</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – symbol name to resolve</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">injected address in the binary</td>
 </tr>
@@ -316,13 +329,112 @@ is_asm (bool): is data assembling</dd>
 <dl class="method">
 <dt id="core.context.Context.declare">
 <code class="descname">declare</code><span class="sig-paren">(</span><em>symbols=None</em>, <em>headers=''</em>, <em>source=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.declare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.declare" title="Permalink to this definition">¶</a></dt>
-<dd><p>? TODO</p>
+<dd><p>declares a symbol</p>
+<p>This method uses the internal Linker object to declare a symbol</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>symbols</strong> (<a class="reference external" href="https://docs.python.org/2/library/stdtypes.html#dict" title="(in Python v2.7)"><em>dict</em></a>) – a dict of form {symbol_name : symbol_declaration}</li>
+<li><strong>headers</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the header of the symbol</li>
+<li><strong>source</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – source of symbols</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="core.context.Context.final">
 <code class="descname">final</code><span class="sig-paren">(</span><em>cb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.final"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.final" title="Permalink to this definition">¶</a></dt>
 <dd><p>? TODO</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-core.binary"></span><dl class="class">
+<dt id="core.binary.Binary">
+<em class="property">class </em><code class="descclassname">core.binary.</code><code class="descname">Binary</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary class representing a binary file</p>
+<p>Use pt.binary to get this instance.</p>
+<dl class="method">
+<dt id="core.binary.Binary.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.collect" title="Permalink to this definition">¶</a></dt>
+<dd><p>collects a context as a wrapper of binary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">context of binary</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#core.context.Context" title="core.context.Context">Context</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.binary.Binary.next_alloc">
+<code class="descname">next_alloc</code><span class="sig-paren">(</span><em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.next_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.next_alloc" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the address of next allocation</p>
+<p>This actually returns the end of some segment</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>target</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – segment name, one of ‘patch’, ‘nx’, ‘link’ or ‘jit’</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">address of the next allocation(end of segment)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)">int</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.binary.Binary.alloc">
+<code class="descname">alloc</code><span class="sig-paren">(</span><em>size</em>, <em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.alloc" title="Permalink to this definition">¶</a></dt>
+<dd><p>allocates a new chunk of memory of given size</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)"><em>int</em></a>) – size to allocate</li>
+<li><strong>target</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – where to put new memory, available choices are ‘patch’, ‘nx’, ‘link’ or ‘jit’</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">allocated memory start address</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/2/library/functions.html#int" title="(in Python v2.7)">int</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="core.binary.Binary.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>saves a binary</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/2/library/functions.html#str" title="(in Python v2.7)"><em>str</em></a>) – the path to save binary to</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>

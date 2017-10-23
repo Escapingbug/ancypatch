@@ -16,6 +16,12 @@ class Context(object):
 
     The Context class to be transfered to user's function as `pt` to provide
     utilities and data
+
+    Available property:
+      arch (Arch): Arch object of current arch used
+      elf (ELFFile): ELFFile object representing current binary
+      entry (int): entry point address
+
     """
     def __init__(self, binary, verbose=False):
         self.binary = binary
@@ -35,6 +41,8 @@ class Context(object):
         self.marked_funcs = []
 
     def relopen(self, name, *args, **kwargs):
+        """opens the generated function info of such name
+        """
         return open(self.binary.path + '.' + name, *args, **kwargs)
 
     @property
@@ -47,7 +55,9 @@ class Context(object):
 
     @entry.setter
     def entry(self, val):
-        self.info(pfcol('MOVE ENTRY POINT') + '-> 0x%x' % val)
+        """changes an entry point
+        """
+        self.info(pfcol('MOVE ENTRY POINT') + '-> 0x{}'.format(hex(val)))
         self.elf.entry = val
 
     def funcs(self, marked=False):
@@ -275,10 +285,10 @@ class Context(object):
         self.error(pfcol('SEARCH') + '"%s" not found.' % tmp)
 
     def hook(self, src, dst, first=False, noentry=False):
-        """hooks some address, inject user-defined code
+        """hooks some address to redirect to user-defined address
 
         Args:
-          src (int | entry): hooking address, you can also use Context.entry to hook the entry point
+          src (int): hooking address, you can also use Context.entry to hook the entry point
           dst (int): where to force the hooked address go
           first (bool): ? TODO
           noentry (bool): ? TODO
@@ -293,13 +303,14 @@ class Context(object):
                 self.binary.entry_hooks.insert(0, dst)
             else:
                 self.binary.entry_hooks.append(dst)
-            self.debug(pfcol('HOOK') + 'ENTRY -> 0x%x' % dst)
+            self.debug(pfcol('HOOK') + 'ENTRY -> 0x{}'.format(dst))
             return
-        self.debug(pfcol('HOOK') + '@0x%x -> 0x%x' % (src, dst))
+        self.debug(pfcol('HOOK') + '@0x{} -> 0x{}'.format(hex(src), hex(dst)))
         self.make_writable(src)
 
         alloc = self.binary.next_alloc()
         # TODO: what if call(0) is smaller than the call to our hook?
+        # the call of redirecting the hooked address
         call = self.asm(self.arch.call(alloc), addr=alloc)
 
         # our injected code is guaranteed to be sequential and unaligned
@@ -313,7 +324,8 @@ class Context(object):
                 break
 
         evicted = evicted.strip(self.asm(self.arch.nop())) # your loss
-        if len(evicted) == 0 and False:
+        if len(evicted) == 0 and False: # TODO and False?? -- Anciety
+            # only nop is patched, just patch and return
             self.patch(src, asm=self.arch.call(dst))
             return
 
@@ -327,6 +339,7 @@ class Context(object):
         # 6. re-hook the patch site (and remove the jmp)
         # 7. jmp to where the tmp jmp was
 
+        # TODO MS part currently ignored by Anciety -- Anciety
         emptyjmp = self.asm(self.arch.jmp(self.binary.next_alloc()), addr=src)
         jmpoff = src + len(evicted)
         jmpevict = str(self.elf.read(jmpoff, len(emptyjmp)))
@@ -394,12 +407,16 @@ class Context(object):
         """injects user-defind code
 
         Kwargs:
+          raw (str): the data to inject when injecting raw bytes
+          asm (str): the assembly to inject when injecting assembly
+          c (str): the C code to inject when injecting C code
           internal (bool): ? TODO
           is_asm (bool): is the content assembling lang
           mark_func (bool): ? TODO
           size (int): how many size to inject
           target (str): ? TODO
-          desc (str): ? injected code?
+          desc (str): descritpion of the data to inject
+          silent (bool): silent mode
 
         Returns:
           int: injected address
@@ -414,6 +431,7 @@ class Context(object):
         if desc:
             desc = ' | "%s"' % desc
 
+        # injected address is the next allocation position
         addr = self.binary.next_alloc(target)
         c = kwargs.get('c')
         if c:
@@ -437,6 +455,7 @@ class Context(object):
             else:
                 self.debug(binascii.hexlify(raw))
 
+        # then we allocate
         addr = self.binary.alloc(len(raw), target=target)
         if mark_func:
             self.marked_funcs.append(Func(self, addr, len(raw)))
@@ -450,8 +469,11 @@ class Context(object):
         """patches an address with user-defined data
 
         KwArgs:
-          desc (str): data to patch
+          raw (str): the data to patch when patching raw bytes
+          asm (str): the assembly to patch when patching assembly
+          desc (str): description of the data to patch
           is_asm (bool): is data assembling
+          silent (bool): silent mode
 
         Returns:
           None
@@ -460,9 +482,9 @@ class Context(object):
         raw, typ = self._compile(addr, **kwargs)
         desc = kwargs.get('desc', '')
         if desc:
-            desc = ' | "%s"' % desc
+            desc = ' | "{}"'.format(desc)
 
-        self.info(pfcol('PATCH') + '@0x%x-0x%x%s' % (addr, addr + len(raw), desc))
+        self.info(pfcol('PATCH') + '@0x{}-0x{}{}' % (hex(addr), hex(addr + len(raw)), desc))
         if len(raw) == 0:
             self.warn('Empty patch.')
             return
@@ -495,7 +517,7 @@ class Context(object):
         This function intends to inject a symbol function to the original binary
 
         Args:
-          sym (str): symbol to resolve
+          sym (str): symbol name to resolve
 
         Returns:
           int: injected address in the binary
@@ -504,7 +526,18 @@ class Context(object):
         return self.binary.linker.resolve(sym)
 
     def declare(self, symbols=None, headers='', source=''):
-        """? TODO
+        """declares a symbol
+
+        This method uses the internal Linker object to declare a symbol
+
+        Args:
+          symbols (dict): a dict of form {symbol_name : symbol_declaration}
+          headers (str): the header of the symbol
+          source (str): source of symbols
+
+        Returns:
+          None
+
         """
         self.binary.linker.declare(symbols, headers, source)
 

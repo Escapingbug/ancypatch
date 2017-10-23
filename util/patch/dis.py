@@ -212,7 +212,7 @@ class Ins(Base):
             if opcls:
                 ops.append(opcls.fromop(ins, op))
             else:
-                print 'UNSUPPORTED OP', op, ins.op_str
+                print('UNSUPPORTED OP {} {}'.format(op, ins.op_str))
                 assert(False)
 
         c = cls(ins.mnemonic, *ops)
@@ -288,18 +288,29 @@ class Label(Base):
         return '%s:' % self.name
 
 class IR(list):
+    """
+
+    Intermediate representation of assembly
+
+    """
+
     def cs(self):
-        'converts IR back to capstone assembly'
+        """converts IR back to capstone assembly"""
         return [ins.ins for ins in self]
 
     def asm(self):
-        'converts IR to assembly source'
+        """converts IR to assembly source"""
         return '\n'.join(map(str, self))
 
     def findall(self, query, stop=None):
         return IR(IRStream(self).filter(query, stop))
 
 class IRStream:
+    """
+
+    Intermediate representation stream
+
+    """
     def __init__(self, gen):
         self.gen = gen
 
@@ -328,6 +339,8 @@ class IRStream:
                 break
 
 def irdis(dis):
+    """disassembls some address and turns into IR
+    """
     if not dis:
         return IR([])
     dis_addr = dis[0].address

@@ -13,7 +13,7 @@ STUB_PRAGMA_POP = r'''
 #pragma GCC diagnostic pop
 '''
 
-func_re_1 = r'^(?P<all>(?P<desc>[^\s].+?(?P<name>{})(?P<args>\(.*?\)))\s*{(?P<body>(.|\n)+?)^})$'
+func_re_1 = r'^(?P<all>(?P<desc>[^\s].+?(?P<name>%s)(?P<args>\(.*?\)))\s*{(?P<body>(.|\n)+?)^})$'
 
 class Decl:
     """
@@ -54,7 +54,7 @@ class Decl:
 
             table = '\n'.join([pt.arch.jmp('_' + sym) for sym in self.syms.keys()])
             sep = 'PATCHKITJMPTABLE'
-            asm += ('\n.ascii "{}"\n__JMPTABLE__:\n'.format(sep)) + table
+            asm += ('\n.ascii "%s"\n__JMPTABLE__:\n' % sep) + table
             addr = pt.binary.next_alloc('link')
             raw = pt.asm(asm, addr=addr, att_syntax=True)
             raw, jmps = raw.rsplit(sep, 1)
@@ -122,7 +122,7 @@ class Linker:
           dict: matched content in dictionary
 
         """
-        match = re.search(func_re_1.format(re.escape(name)), src, re.MULTILINE)
+        match = re.search(func_re_1 % re.escape(name), src, re.MULTILINE)
         return match.groupdict()
 
     def declarefuncs(self, src, names):
@@ -150,7 +150,7 @@ class Linker:
           None
 
         """
-        syms = [m[2] for m in re.findall(func_re_1.format('\w+'), src, re.MULTILINE)]
+        syms = [m[2] for m in re.findall(func_re_1 % '\w+', src, re.MULTILINE)]
 
         for name in syms:
             func = self.getfunc(src, name)

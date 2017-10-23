@@ -1,5 +1,16 @@
 class Func:
+    """Representation of a function
+    """
+
     def __init__(self, pt, addr, size):
+        """
+
+        Args:
+          pt (Context): patch context
+          addr (int): function address
+          size (int): size of function
+
+        """
         self.pt = pt
         self.addr = addr
         self.size = size

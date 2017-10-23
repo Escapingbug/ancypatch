@@ -57,6 +57,12 @@
 
 <span class="sd">    The Context class to be transfered to user&#39;s function as `pt` to provide</span>
 <span class="sd">    utilities and data</span>
+
+<span class="sd">    Available property:</span>
+<span class="sd">      arch (Arch): Arch object of current arch used</span>
+<span class="sd">      elf (ELFFile): ELFFile object representing current binary</span>
+<span class="sd">      entry (int): entry point address</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binary</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">binary</span>
@@ -76,6 +82,8 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">marked_funcs</span> <span class="o">=</span> <span class="p">[]</span>
 
     <span class="k">def</span> <span class="nf">relopen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;opens the generated function info of such name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">path</span> <span class="o">+</span> <span class="s1">&#39;.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
 
     <span class="nd">@property</span>
@@ -88,7 +96,9 @@
 
     <span class="nd">@entry</span><span class="o">.</span><span class="n">setter</span>
     <span class="k">def</span> <span class="nf">entry</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;MOVE ENTRY POINT&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-&gt; 0x</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">val</span><span class="p">)</span>
+        <span class="sd">&quot;&quot;&quot;changes an entry point</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;MOVE ENTRY POINT&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;-&gt; 0x</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">val</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elf</span><span class="o">.</span><span class="n">entry</span> <span class="o">=</span> <span class="n">val</span>
 
     <span class="k">def</span> <span class="nf">funcs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">marked</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
@@ -316,10 +326,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;SEARCH&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;&quot;</span><span class="si">%s</span><span class="s1">&quot; not found.&#39;</span> <span class="o">%</span> <span class="n">tmp</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Context.hook"><a class="viewcode-back" href="../../index.html#core.context.Context.hook">[docs]</a>    <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">noentry</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;hooks some address, inject user-defined code</span>
+        <span class="sd">&quot;&quot;&quot;hooks some address to redirect to user-defined address</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          src (int | entry): hooking address, you can also use Context.entry to hook the entry point</span>
+<span class="sd">          src (int): hooking address, you can also use Context.entry to hook the entry point</span>
 <span class="sd">          dst (int): where to force the hooked address go</span>
 <span class="sd">          first (bool): ? TODO</span>
 <span class="sd">          noentry (bool): ? TODO</span>
@@ -334,13 +344,14 @@
                 <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">entry_hooks</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">dst</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">entry_hooks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;HOOK&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;ENTRY -&gt; 0x</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">dst</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;HOOK&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;ENTRY -&gt; 0x</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dst</span><span class="p">))</span>
             <span class="k">return</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;HOOK&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;@0x</span><span class="si">%x</span><span class="s1"> -&gt; 0x</span><span class="si">%x</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;HOOK&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;@0x</span><span class="si">{}</span><span class="s1"> -&gt; 0x</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">src</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">dst</span><span class="p">)))</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">make_writable</span><span class="p">(</span><span class="n">src</span><span class="p">)</span>
 
         <span class="n">alloc</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">next_alloc</span><span class="p">()</span>
         <span class="c1"># TODO: what if call(0) is smaller than the call to our hook?</span>
+        <span class="c1"># the call of redirecting the hooked address</span>
         <span class="n">call</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">alloc</span><span class="p">),</span> <span class="n">addr</span><span class="o">=</span><span class="n">alloc</span><span class="p">)</span>
 
         <span class="c1"># our injected code is guaranteed to be sequential and unaligned</span>
@@ -354,7 +365,8 @@
                 <span class="k">break</span>
 
         <span class="n">evicted</span> <span class="o">=</span> <span class="n">evicted</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">asm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="o">.</span><span class="n">nop</span><span class="p">()))</span> <span class="c1"># your loss</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">evicted</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">evicted</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="kc">False</span><span class="p">:</span> <span class="c1"># TODO and False?? -- Anciety</span>
+            <span class="c1"># only nop is patched, just patch and return</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">patch</span><span class="p">(</span><span class="n">src</span><span class="p">,</span> <span class="n">asm</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">dst</span><span class="p">))</span>
             <span class="k">return</span>
 
@@ -368,6 +380,7 @@
         <span class="c1"># 6. re-hook the patch site (and remove the jmp)</span>
         <span class="c1"># 7. jmp to where the tmp jmp was</span>
 
+        <span class="c1"># TODO MS part currently ignored by Anciety -- Anciety</span>
         <span class="n">emptyjmp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">asm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">arch</span><span class="o">.</span><span class="n">jmp</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">next_alloc</span><span class="p">()),</span> <span class="n">addr</span><span class="o">=</span><span class="n">src</span><span class="p">)</span>
         <span class="n">jmpoff</span> <span class="o">=</span> <span class="n">src</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">evicted</span><span class="p">)</span>
         <span class="n">jmpevict</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elf</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">jmpoff</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">emptyjmp</span><span class="p">)))</span>
@@ -435,12 +448,16 @@
         <span class="sd">&quot;&quot;&quot;injects user-defind code</span>
 
 <span class="sd">        Kwargs:</span>
+<span class="sd">          raw (str): the data to inject when injecting raw bytes</span>
+<span class="sd">          asm (str): the assembly to inject when injecting assembly</span>
+<span class="sd">          c (str): the C code to inject when injecting C code</span>
 <span class="sd">          internal (bool): ? TODO</span>
 <span class="sd">          is_asm (bool): is the content assembling lang</span>
 <span class="sd">          mark_func (bool): ? TODO</span>
 <span class="sd">          size (int): how many size to inject</span>
 <span class="sd">          target (str): ? TODO</span>
-<span class="sd">          desc (str): ? injected code?</span>
+<span class="sd">          desc (str): descritpion of the data to inject</span>
+<span class="sd">          silent (bool): silent mode</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          int: injected address</span>
@@ -455,6 +472,7 @@
         <span class="k">if</span> <span class="n">desc</span><span class="p">:</span>
             <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39; | &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">desc</span>
 
+        <span class="c1"># injected address is the next allocation position</span>
         <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">next_alloc</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
         <span class="n">c</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;c&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">c</span><span class="p">:</span>
@@ -478,6 +496,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">binascii</span><span class="o">.</span><span class="n">hexlify</span><span class="p">(</span><span class="n">raw</span><span class="p">))</span>
 
+        <span class="c1"># then we allocate</span>
         <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">alloc</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span> <span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">mark_func</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">marked_funcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Func</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">addr</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)))</span>
@@ -491,8 +510,11 @@
         <span class="sd">&quot;&quot;&quot;patches an address with user-defined data</span>
 
 <span class="sd">        KwArgs:</span>
-<span class="sd">          desc (str): data to patch</span>
+<span class="sd">          raw (str): the data to patch when patching raw bytes</span>
+<span class="sd">          asm (str): the assembly to patch when patching assembly</span>
+<span class="sd">          desc (str): description of the data to patch</span>
 <span class="sd">          is_asm (bool): is data assembling</span>
+<span class="sd">          silent (bool): silent mode</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          None</span>
@@ -501,9 +523,9 @@
         <span class="n">raw</span><span class="p">,</span> <span class="n">typ</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_compile</span><span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">desc</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;desc&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">desc</span><span class="p">:</span>
-            <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39; | &quot;</span><span class="si">%s</span><span class="s1">&quot;&#39;</span> <span class="o">%</span> <span class="n">desc</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="s1">&#39; | &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">desc</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;@0x</span><span class="si">%x</span><span class="s1">-0x</span><span class="si">%x%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">addr</span><span class="p">,</span> <span class="n">addr</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span> <span class="n">desc</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">pfcol</span><span class="p">(</span><span class="s1">&#39;PATCH&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;@0x</span><span class="si">{}</span><span class="s1">-0x</span><span class="si">{}{}</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">hex</span><span class="p">(</span><span class="n">addr</span><span class="p">),</span> <span class="nb">hex</span><span class="p">(</span><span class="n">addr</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)),</span> <span class="n">desc</span><span class="p">))</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;Empty patch.&#39;</span><span class="p">)</span>
             <span class="k">return</span>
@@ -536,7 +558,7 @@
 <span class="sd">        This function intends to inject a symbol function to the original binary</span>
 
 <span class="sd">        Args:</span>
-<span class="sd">          sym (str): symbol to resolve</span>
+<span class="sd">          sym (str): symbol name to resolve</span>
 
 <span class="sd">        Returns:</span>
 <span class="sd">          int: injected address in the binary</span>
@@ -545,7 +567,18 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">linker</span><span class="o">.</span><span class="n">resolve</span><span class="p">(</span><span class="n">sym</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Context.declare"><a class="viewcode-back" href="../../index.html#core.context.Context.declare">[docs]</a>    <span class="k">def</span> <span class="nf">declare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbols</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">source</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;? TODO</span>
+        <span class="sd">&quot;&quot;&quot;declares a symbol</span>
+
+<span class="sd">        This method uses the internal Linker object to declare a symbol</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">          symbols (dict): a dict of form {symbol_name : symbol_declaration}</span>
+<span class="sd">          headers (str): the header of the symbol</span>
+<span class="sd">          source (str): source of symbols</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">          None</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">binary</span><span class="o">.</span><span class="n">linker</span><span class="o">.</span><span class="n">declare</span><span class="p">(</span><span class="n">symbols</span><span class="p">,</span> <span class="n">headers</span><span class="p">,</span> <span class="n">source</span><span class="p">)</span></div>
 

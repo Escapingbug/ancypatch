@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>core.arch &#8212; ancypatch 0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for core.arch</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">capstone</span> <span class="k">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">keystone</span> <span class="k">import</span> <span class="o">*</span>
+
+<div class="viewcode-block" id="Arch"><a class="viewcode-back" href="../../index.html#core.arch.Arch">[docs]</a><span class="k">class</span> <span class="nc">Arch</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Arch class represents the current architecture</span>
+<span class="sd">    </span>
+<span class="sd">    One can use Context object to get Arch, like pt.arch</span>
+<span class="sd">    This one is just base class</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># capstone object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cs</span> <span class="o">=</span> <span class="n">Cs</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_cs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">detail</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1"># keystone object</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ks</span> <span class="o">=</span> <span class="n">Ks</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">_ks</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">asm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">asm</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">att_syntax</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;assembling of this architecture</span>
+
+<span class="sd">        This is the internal implementation of pt.asm, using</span>
+<span class="sd">        keystone to do disassemble job.</span>
+
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">asm</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+        <span class="c1"># asm start label for use with relative offsets</span>
+        <span class="n">asm</span> <span class="o">=</span> <span class="s1">&#39;_PKST_:;&#39;</span> <span class="o">+</span> <span class="n">asm</span>
+
+        <span class="n">saved</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="o">.</span><span class="n">syntax</span>
+        <span class="k">if</span> <span class="n">att_syntax</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">KS_OPT_SYNTAX_ATT</span>
+        <span class="n">tmp</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="o">.</span><span class="n">asm</span><span class="p">(</span><span class="n">asm</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="n">addr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ks</span><span class="o">.</span><span class="n">syntax</span> <span class="o">=</span> <span class="n">saved</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">chr</span><span class="p">,</span> <span class="n">tmp</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">dis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw</span><span class="p">,</span> <span class="n">addr</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;disassembling of this architecture</span>
+
+<span class="sd">        This is the internal implementation of pt.dis, using</span>
+<span class="sd">        capstone to do disassemble job.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cs</span><span class="o">.</span><span class="n">disasm</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">raw</span><span class="p">),</span> <span class="n">addr</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">jmp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">ret</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">nop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<span class="k">class</span> <span class="nc">x86</span><span class="p">(</span><span class="n">Arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;x86 implementation of Arch class</span>
+
+<span class="sd">    Use pt.arch to get the instance.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_cs</span> <span class="o">=</span> <span class="n">CS_ARCH_X86</span><span class="p">,</span> <span class="n">CS_MODE_32</span>
+    <span class="n">_ks</span> <span class="o">=</span> <span class="n">KS_ARCH_X86</span><span class="p">,</span> <span class="n">KS_MODE_32</span>
+
+    <span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span> 
+        <span class="k">return</span> <span class="s1">&#39;call </span><span class="si">{}</span><span class="s1">;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">jmp</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;jmp </span><span class="si">{}</span><span class="s1">;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">ret</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="s1">&#39;ret;&#39;</span>
+    <span class="k">def</span> <span class="nf">nop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span> <span class="k">return</span> <span class="s1">&#39;nop;&#39;</span>
+
+    <span class="c1"># memcpy should be pc-relative</span>
+    <span class="c1"># dst and src are offsets from the _PKST_ label</span>
+    <span class="k">def</span> <span class="nf">memcpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;memcpy implementation under x86 arch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        push edi</span>
+<span class="s1">        push esi</span>
+<span class="s1">        push ecx</span>
+
+<span class="s1">        call ref</span>
+<span class="s1">        ref: pop edi</span>
+<span class="s1">        sub edi, ref - _PKST_</span>
+<span class="s1">        mov esi, edi</span>
+
+<span class="s1">        add edi, </span><span class="si">{}</span><span class="s1"></span>
+<span class="s1">        add esi, </span><span class="si">{}</span><span class="s1"></span>
+<span class="s1">        mov ecx, </span><span class="si">{}</span><span class="s1"></span>
+
+<span class="s1">        rep movsb</span>
+
+<span class="s1">        pop ecx</span>
+<span class="s1">        pop esi</span>
+<span class="s1">        pop edi</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">x86_64</span><span class="p">(</span><span class="n">x86</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;x86_64 implementation of Arch</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_cs</span> <span class="o">=</span> <span class="n">CS_ARCH_X86</span><span class="p">,</span> <span class="n">CS_MODE_64</span>
+    <span class="n">_ks</span> <span class="o">=</span> <span class="n">KS_ARCH_X86</span><span class="p">,</span> <span class="n">KS_MODE_64</span>
+
+    <span class="k">def</span> <span class="nf">memcpy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">size</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;memcpy implementation under x86_64 arch</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">        push rdi</span>
+<span class="s1">        push rsi</span>
+<span class="s1">        push rcx</span>
+
+<span class="s1">        lea rdi, [rip - _PKST_ + </span><span class="si">{}</span><span class="s1">]</span>
+<span class="s1">        lea rsi, [rip - _PKST_ + </span><span class="si">{}</span><span class="s1">]</span>
+<span class="s1">        mov rcx, </span><span class="si">{}</span><span class="s1"></span>
+
+<span class="s1">        rep movsb</span>
+
+<span class="s1">        pop rcx</span>
+<span class="s1">        pop rsi</span>
+<span class="s1">        pop rdi</span>
+<span class="s1">        &#39;&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">arm</span><span class="p">(</span><span class="n">Arch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;arm arch is currently not implemented</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO implement arm</span>
+    <span class="n">_cs</span> <span class="o">=</span> <span class="n">CS_ARCH_ARM</span><span class="p">,</span> <span class="n">CS_MODE_ARM</span>
+    <span class="n">_ks</span> <span class="o">=</span> <span class="n">KS_ARCH_ARM</span><span class="p">,</span> <span class="n">KS_MODE_ARM</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">ancypatch</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Anciety.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -4,6 +4,8 @@ from collections import defaultdict
 from util.patch.dis import irdis, IR
 
 def aslr(pt, count=3):
+    """patch helper of adding custom aslr
+    """
     funcs = {}
 
     saved = []
@@ -25,7 +27,7 @@ def aslr(pt, count=3):
     tmp = []
     for func, ir, size in saved:
         for hook in pt.binary.asm_hook:
-            pt.info('[ASM Hook] %s.%s() on 0x%x' % (hook.__module__, hook.__name__, func.addr))
+            pt.info('[ASM Hook] {}.{}() on 0x{}'.format(hook.__module__, hook.__name__, hex(func.addr)))
             tmpir = hook(pt, ir)
             if tmpir:
                 ir = IR(tmpir)
