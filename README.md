@@ -1,4 +1,4 @@
-ancypatch
+# ancypatch
 ----------
 A forked verson of origial patchkit, means to be more easy to install and contains more documentation.
 
@@ -9,12 +9,12 @@ Usage:
     ancypatch <binary> <patchdir|file> [patchdir|file...]
 
 
-patchdir
+# patchdir
 ----
 Contains one or more Python patch files, which will be executed in alphabetical order against a binary.
 
 
-Patch Examples
+# Patch Examples
 ----
 
 Nopping an address, injecting an assembly function, and hooking the entry point:
@@ -51,7 +51,7 @@ API
 
 see [documentation page](http://anciety.cn/ancypatch/index.html)
 
-IDA scripts
+# IDA scripts
 ----
 Some scripts live in the ida/ path. Run them like this:
 
@@ -60,7 +60,7 @@ Some scripts live in the ida/ path. Run them like this:
 When invoked like this, allfuncs.py will generate `a.out.funcs` which is used by hardening scripts.
 
 
-Tools
+# Tools
 ----
 These are somewhat CGC and x86-specific right now, but will be ported for general use in the future.
 
@@ -68,9 +68,17 @@ These are somewhat CGC and x86-specific right now, but will be ported for genera
 - bindiff: uses the block boundaries from an explore run, as well as additional analysis to find and output basic block diffs between two binaries, used as `ancybindiff`
 
 
-Installation
+# Installation
 ----
 (This is about to change shortly. I'm doing surgery on this for now)
+
+## Simple form
+simple installation via pip:
+```
+pip install ancypatch
+```
+
+## Manually
 
 
 ```
