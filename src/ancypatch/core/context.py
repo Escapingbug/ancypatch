@@ -1,7 +1,7 @@
 import capstone
 import binascii
 
-import arch
+from .arch import *
 import compiler
 from func import Func
 from ..util import stdlib

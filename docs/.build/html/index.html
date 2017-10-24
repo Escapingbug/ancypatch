@@ -42,9 +42,23 @@
 <h1>Welcome to ancypatch’s documentation!<a class="headerlink" href="#welcome-to-ancypatch-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-<span class="target" id="module-core.context"></span><dl class="class">
-<dt id="core.context.Context">
-<em class="property">class </em><code class="descclassname">core.context.</code><code class="descname">Context</code><span class="sig-paren">(</span><em>binary</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context" title="Permalink to this definition">¶</a></dt>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>Now installation is being simple, you can just use pip to install:</p>
+<blockquote>
+<div>pip install ancypatch</div></blockquote>
+<p>If you still have some problem install dependencies, you can still
+run deps.sh, which is legacy.(I may change that when it is appropriate)
+And then run</p>
+<blockquote>
+<div>python setup.py install</div></blockquote>
+<p>Note that this setup.py script will not install dependencies for you.</p>
+</div>
+<div class="section" id="module-ancypatch.core.context">
+<span id="api-reference"></span><h2>API Reference<a class="headerlink" href="#module-ancypatch.core.context" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="ancypatch.core.context.Context">
+<em class="property">class </em><code class="descclassname">ancypatch.core.context.</code><code class="descname">Context</code><span class="sig-paren">(</span><em>binary</em>, <em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Context class</p>
 <p>The Context class to be transfered to user’s function as <cite>pt</cite> to provide
 utilities and data</p>
@@ -55,8 +69,8 @@ utilities and data</p>
 <p>entry (int): entry point address</p>
 </div></blockquote>
 <dl class="method">
-<dt id="core.context.Context.asm">
-<code class="descname">asm</code><span class="sig-paren">(</span><em>asm</em>, <em>addr</em>, <em>att_syntax=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.asm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.asm" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.asm">
+<code class="descname">asm</code><span class="sig-paren">(</span><em>asm</em>, <em>addr</em>, <em>att_syntax=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.asm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.asm" title="Permalink to this definition">¶</a></dt>
 <dd><p>assembles content</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -80,8 +94,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.dis">
-<code class="descname">dis</code><span class="sig-paren">(</span><em>addr</em>, <em>size=64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.dis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.dis" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.dis">
+<code class="descname">dis</code><span class="sig-paren">(</span><em>addr</em>, <em>size=64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.dis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.dis" title="Permalink to this definition">¶</a></dt>
 <dd><p>disassembles content</p>
 <p>disassembles some content at some address of given size</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -105,8 +119,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.disiter">
-<code class="descname">disiter</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.disiter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.disiter" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.disiter">
+<code class="descname">disiter</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.disiter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.disiter" title="Permalink to this definition">¶</a></dt>
 <dd><p>disassembles content returns iterator</p>
 <p>disassembles content but returns iterator so we can move on till the end</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -124,8 +138,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.irdis">
-<code class="descname">irdis</code><span class="sig-paren">(</span><em>addr</em>, <em>size=64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.irdis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.irdis" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.irdis">
+<code class="descname">irdis</code><span class="sig-paren">(</span><em>addr</em>, <em>size=64</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.irdis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.irdis" title="Permalink to this definition">¶</a></dt>
 <dd><p>disassembles content and returns IR representation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -148,8 +162,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.irstream">
-<code class="descname">irstream</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.irstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.irstream" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.irstream">
+<code class="descname">irstream</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.irstream"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.irstream" title="Permalink to this definition">¶</a></dt>
 <dd><p>disassembles content and turns into an IRStream</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -166,8 +180,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.ir">
-<code class="descname">ir</code><span class="sig-paren">(</span><em>asm</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.ir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.ir" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.ir">
+<code class="descname">ir</code><span class="sig-paren">(</span><em>asm</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.ir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.ir" title="Permalink to this definition">¶</a></dt>
 <dd><p>wraps an asm to IR representation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -197,8 +211,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.make_writable">
-<code class="descname">make_writable</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.make_writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.make_writable" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.make_writable">
+<code class="descname">make_writable</code><span class="sig-paren">(</span><em>addr</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.make_writable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.make_writable" title="Permalink to this definition">¶</a></dt>
 <dd><p>makes a segment of some address writable</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -213,8 +227,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.search">
-<code class="descname">search</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.search" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>searches some data</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -231,8 +245,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.hook">
-<code class="descname">hook</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em>, <em>first=False</em>, <em>noentry=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.hook" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.hook">
+<code class="descname">hook</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em>, <em>first=False</em>, <em>noentry=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>hooks some address to redirect to user-defined address</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -257,8 +271,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.inject">
-<code class="descname">inject</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>c</em>, <em>internal</em>, <em>is_asm</em>, <em>mark_func</em>, <em>size</em>, <em>target</em>, <em>desc</em>, <em>silent</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.inject" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.inject">
+<code class="descname">inject</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>c</em>, <em>internal</em>, <em>is_asm</em>, <em>mark_func</em>, <em>size</em>, <em>target</em>, <em>desc</em>, <em>silent</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.inject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.inject" title="Permalink to this definition">¶</a></dt>
 <dd><p>injects user-defind code</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -289,8 +303,8 @@ utilities and data</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.patch">
-<code class="descname">patch</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>desc</em>, <em>is_asm</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.patch" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.patch">
+<code class="descname">patch</code><span class="sig-paren">(</span><span class="optional">[</span><em>raw</em>, <em>asm</em>, <em>desc</em>, <em>is_asm</em><span class="optional">]</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.patch"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.patch" title="Permalink to this definition">¶</a></dt>
 <dd><p>patches an address with user-defined data</p>
 <dl class="docutils">
 <dt>KwArgs:</dt>
@@ -311,8 +325,8 @@ silent (bool): silent mode</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.resolve">
-<code class="descname">resolve</code><span class="sig-paren">(</span><em>sym</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.resolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.resolve" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.resolve">
+<code class="descname">resolve</code><span class="sig-paren">(</span><em>sym</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.resolve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.resolve" title="Permalink to this definition">¶</a></dt>
 <dd><p>resolves a symbol</p>
 <p>This function intends to inject a symbol function to the original binary</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -330,8 +344,8 @@ silent (bool): silent mode</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.declare">
-<code class="descname">declare</code><span class="sig-paren">(</span><em>symbols=None</em>, <em>headers=''</em>, <em>source=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.declare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.declare" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.declare">
+<code class="descname">declare</code><span class="sig-paren">(</span><em>symbols=None</em>, <em>headers=''</em>, <em>source=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.declare"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.declare" title="Permalink to this definition">¶</a></dt>
 <dd><p>declares a symbol</p>
 <p>This method uses the internal Linker object to declare a symbol</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -353,21 +367,21 @@ silent (bool): silent mode</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.context.Context.final">
-<code class="descname">final</code><span class="sig-paren">(</span><em>cb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/context.html#Context.final"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.context.Context.final" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.context.Context.final">
+<code class="descname">final</code><span class="sig-paren">(</span><em>cb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.final"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.final" title="Permalink to this definition">¶</a></dt>
 <dd><p>? TODO</p>
 </dd></dl>
 
 </dd></dl>
 
-<span class="target" id="module-core.binary"></span><dl class="class">
-<dt id="core.binary.Binary">
-<em class="property">class </em><code class="descclassname">core.binary.</code><code class="descname">Binary</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-ancypatch.core.binary"></span><dl class="class">
+<dt id="ancypatch.core.binary.Binary">
+<em class="property">class </em><code class="descclassname">ancypatch.core.binary.</code><code class="descname">Binary</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/binary.html#Binary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.binary.Binary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Binary class representing a binary file</p>
 <p>Use pt.binary to get this instance.</p>
 <dl class="method">
-<dt id="core.binary.Binary.collect">
-<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.collect" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.binary.Binary.collect">
+<code class="descname">collect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/binary.html#Binary.collect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.binary.Binary.collect" title="Permalink to this definition">¶</a></dt>
 <dd><p>collects a context as a wrapper of binary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -375,15 +389,15 @@ silent (bool): silent mode</dd>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">context of binary</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#core.context.Context" title="core.context.Context">Context</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#ancypatch.core.context.Context" title="ancypatch.core.context.Context">Context</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.binary.Binary.next_alloc">
-<code class="descname">next_alloc</code><span class="sig-paren">(</span><em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.next_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.next_alloc" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.binary.Binary.next_alloc">
+<code class="descname">next_alloc</code><span class="sig-paren">(</span><em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/binary.html#Binary.next_alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.binary.Binary.next_alloc" title="Permalink to this definition">¶</a></dt>
 <dd><p>returns the address of next allocation</p>
 <p>This actually returns the end of some segment</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -401,8 +415,8 @@ silent (bool): silent mode</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.binary.Binary.alloc">
-<code class="descname">alloc</code><span class="sig-paren">(</span><em>size</em>, <em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.alloc" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.binary.Binary.alloc">
+<code class="descname">alloc</code><span class="sig-paren">(</span><em>size</em>, <em>target='patch'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/binary.html#Binary.alloc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.binary.Binary.alloc" title="Permalink to this definition">¶</a></dt>
 <dd><p>allocates a new chunk of memory of given size</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -425,8 +439,8 @@ silent (bool): silent mode</dd>
 </dd></dl>
 
 <dl class="method">
-<dt id="core.binary.Binary.save">
-<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/core/binary.html#Binary.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#core.binary.Binary.save" title="Permalink to this definition">¶</a></dt>
+<dt id="ancypatch.core.binary.Binary.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/binary.html#Binary.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.binary.Binary.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>saves a binary</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -442,6 +456,7 @@ silent (bool): silent mode</dd>
 
 </dd></dl>
 
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>

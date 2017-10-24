@@ -10,9 +10,27 @@ Welcome to ancypatch's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+=====================================
+Installation
+=====================================
 
+Now installation is being simple, you can just use pip to install:
 
-.. module:: core.context
+    pip install ancypatch
+
+If you still have some problem install dependencies, you can still
+run deps.sh, which is legacy.(I may change that when it is appropriate)
+And then run 
+    
+    python setup.py install
+
+Note that this setup.py script will not install dependencies for you.
+
+=====================================
+API Reference
+=====================================
+
+.. module:: ancypatch.core.context
 
 .. autoclass:: Context
 
@@ -46,7 +64,7 @@ Welcome to ancypatch's documentation!
 
 
 
-.. module:: core.binary
+.. module:: ancypatch.core.binary
 
 .. autoclass:: Binary
    
@@ -54,7 +72,6 @@ Welcome to ancypatch's documentation!
    .. automethod:: next_alloc(target='patch')
    .. automethod:: alloc(size, target='patch')
    .. automethod:: save(path)
-
 
 
 Indices and tables
