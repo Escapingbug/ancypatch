@@ -3,7 +3,7 @@
 import os
 import sys
 
-from core import Patcher
+from ancypatch.core import Patcher
 from optparse import OptionParser
 
 def main():
