@@ -5,10 +5,10 @@ import difflib
 import itertools
 import sys
 
-from core.binary import Binary
-from util import cfg
+from ancypatch.core.binary import Binary
+from ancypatch.util import cfg
 
-if __name__ == '__main__':
+def main():
     backtrack = False
     if len(sys.argv) >= 2 and sys.argv[1] == '--backtrack':
         sys.argv.pop(1)
@@ -40,3 +40,6 @@ if __name__ == '__main__':
         with pt.relopen('funcs', 'w') as f:
             for func in funcs:
                 f.write('%08x %08x\n' % (func.addr, func.addr + func.size))
+
+if __name__ == '__main__':
+    main()

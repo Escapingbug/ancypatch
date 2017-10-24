@@ -13,6 +13,7 @@ setup(
             'ancypatch = ancypatch.scripts.patch:main',
             'ancybindiff = ancypatch.scripts.bindiff:main',
             'ancyrun = ancypatch.scripts.patch:run',
+            'ancyexplore = ancypatch.scripts.explore:run',
         ]
     },
     author='Anciety',

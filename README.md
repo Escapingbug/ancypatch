@@ -6,7 +6,7 @@ Patches an ELF binary using one or more simple Python scripts.
 
 Usage:
 
-    patch <binary> <patchdir|file> [patchdir|file...]
+    ancypatch <binary> <patchdir|file> [patchdir|file...]
 
 
 patchdir
@@ -64,16 +64,28 @@ Tools
 ----
 These are somewhat CGC and x86-specific right now, but will be ported for general use in the future.
 
-- explore: uses a Python CFG and recursive backtracking emulator to find basic blocks in an executable
-- bindiff: uses the block boundaries from an explore run, as well as additional analysis to find and output basic block diffs between two binaries
+- explore: uses a Python CFG and recursive backtracking emulator to find basic blocks in an executable, used as `ancyexplore`
+- bindiff: uses the block boundaries from an explore run, as well as additional analysis to find and output basic block diffs between two binaries, used as `ancybindiff`
 
 
-Dependencies
+Installation
 ----
-- Run `./deps.sh` to automatically install these.
-  - Capstone Engine - https://github.com/aquynh/capstone.git
-  - Keystone Engine - https://github.com/keystone-engine/keystone.git
-  - Unicorn Engine  - https://github.com/unicorn-engine/unicorn.git
+(This is about to change shortly. I'm doing surgery on this for now)
+
+
+```
+# Run `./deps.sh` to automatically install these.
+#   - Capstone Engine - https://github.com/aquynh/capstone.git
+#   - Keystone Engine - https://github.com/keystone-engine/keystone.git
+#   - Unicorn Engine  - https://github.com/unicorn-engine/unicorn.git
+./deps.sh
+
+# after installation of the dependencies, we can now install ancypatch
+python setup.py install
+
+echo "now we can use ancypatch, ancybindiff, ancyrun and ancyexplore :) Have fun."
+```
+ 
 
 Notice
 -------

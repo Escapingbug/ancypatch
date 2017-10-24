@@ -2,3 +2,5 @@
 build
 venv
 test
+*.egg-info
+dist
