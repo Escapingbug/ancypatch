@@ -8,6 +8,7 @@ setup(
     package_data={
         '': ['*.c', '*.h']
     },
+    install_requires=['keystone-engine', 'capstone', 'unicorn'],
     entry_points={
         'console_scripts': [
             'ancypatch = ancypatch.scripts.patch:main',
