@@ -2,7 +2,7 @@ import re
 from capstone import *
 from keystone import *
 
-class Arch:
+class Arch(object):
     """Arch class represents the current architecture
     
     One can use Context object to get Arch, like pt.arch

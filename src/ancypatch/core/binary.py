@@ -8,7 +8,7 @@ from ..util.elffile import PT
 from context import Context
 from linker import Linker
 
-class Binary:
+class Binary(object):
     """Binary class representing a binary file
 
     Use pt.binary to get this instance.

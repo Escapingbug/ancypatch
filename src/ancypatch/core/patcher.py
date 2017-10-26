@@ -6,7 +6,7 @@ import traceback
 
 from binary import Binary
 
-class Patcher:
+class Patcher(object):
     def __init__(self, binary, verbose=False, cflags=None, silent=False):
         self.bin = Binary(binary)
         self.bin.verbose = verbose

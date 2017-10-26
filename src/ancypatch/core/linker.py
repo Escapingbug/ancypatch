@@ -15,7 +15,7 @@ STUB_PRAGMA_POP = r'''
 
 func_re_1 = r'^(?P<all>(?P<desc>[^\s].+?(?P<name>%s)(?P<args>\(.*?\)))\s*{(?P<body>(.|\n)+?)^})$'
 
-class Decl:
+class Decl(object):
     """
     symbol declaration class, describing a symbol declaration
     """
@@ -65,7 +65,7 @@ class Decl:
             pt.inject(raw=raw, is_asm=True, target='link')
             return addrs
 
-class Linker:
+class Linker(object):
     def __init__(self, binary):
         self.binary = binary
         self.decls = []
