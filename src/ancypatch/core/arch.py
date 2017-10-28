@@ -32,8 +32,6 @@ class Arch(object):
         saved = self.ks.syntax
         if att_syntax:
             self.ks.syntax = KS_OPT_SYNTAX_ATT
-        # FIXME debug print
-        print("assembling {}".format(asm))
         tmp, _ = self.ks.asm(asm, addr=addr)
         self.ks.syntax = saved
         return ''.join(map(chr, tmp))
