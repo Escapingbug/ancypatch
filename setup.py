@@ -2,8 +2,8 @@ from setuptools import setup, find_packages
 
 setup(
     name='ancypatch',
-    version='0.1.1',
-    packages=find_packages('src'),
+    version='0.1.2',
+    packages=find_packages('src', exclude=["*.tests", 'tests.*', 'tests', '*.tests.*']),
     package_dir={'ancypatch':'src/ancypatch'},
     package_data={
         '': ['*.c', '*.h']
