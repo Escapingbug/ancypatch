@@ -248,6 +248,11 @@ utilities and data</p>
 <dt id="ancypatch.core.context.Context.hook">
 <code class="descname">hook</code><span class="sig-paren">(</span><em>src</em>, <em>dst</em>, <em>first=False</em>, <em>noentry=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/ancypatch/core/context.html#Context.hook"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#ancypatch.core.context.Context.hook" title="Permalink to this definition">¶</a></dt>
 <dd><p>hooks some address to redirect to user-defined address</p>
+<p>Note that the if overwritten instructions(when insert call to instructions of yourself) contains
+jump, it may break.</p>
+<p>This is caused by its implementation. When we run the original code hooked after inserting our own
+code, some instructions after original code are not available. If the original code contains jump
+to these address, then we break. Try to avoid this by using it another way.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
