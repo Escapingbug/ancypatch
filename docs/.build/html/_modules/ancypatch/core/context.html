@@ -331,7 +331,7 @@
 <div class="viewcode-block" id="Context.hook"><a class="viewcode-back" href="../../../index.html#ancypatch.core.context.Context.hook">[docs]</a>    <span class="k">def</span> <span class="nf">hook</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">noentry</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;hooks some address to redirect to user-defined address</span>
 
-<span class="sd">        Note that the if overwritten instructions(when insert call to instructions of yourself) contains</span>
+<span class="sd">        Note that if overwritten instructions(when insert call to instructions of yourself) contains</span>
 <span class="sd">        jump, it may break. </span>
 <span class="sd">        </span>
 <span class="sd">        This is caused by its implementation. When we run the original code hooked after inserting our own</span>

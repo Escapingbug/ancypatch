@@ -290,7 +290,7 @@ class Context(object):
     def hook(self, src, dst, first=False, noentry=False):
         """hooks some address to redirect to user-defined address
 
-        Note that the if overwritten instructions(when insert call to instructions of yourself) contains
+        Note that if overwritten instructions(when insert call to instructions of yourself) contains
         jump, it may break. 
         
         This is caused by its implementation. When we run the original code hooked after inserting our own
