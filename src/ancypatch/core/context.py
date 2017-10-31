@@ -290,6 +290,13 @@ class Context(object):
     def hook(self, src, dst, first=False, noentry=False):
         """hooks some address to redirect to user-defined address
 
+        Note that the if overwritten instructions(when insert call to instructions of yourself) contains
+        jump, it may break. 
+        
+        This is caused by its implementation. When we run the original code hooked after inserting our own
+        code, some instructions after original code are not available. If the original code contains jump
+        to these address, then we break. Try to avoid this by using it another way.
+
         Args:
           src (int): hooking address, you can also use Context.entry to hook the entry point
           dst (int): where to force the hooked address go
