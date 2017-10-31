@@ -102,6 +102,27 @@ class x86(Arch):
         pop edi
         '''.format(dst, src, size)
 
+    @property
+    def jmp_mnemonics(self):
+        return [
+            'jo',
+            'jno',
+            'jb', 'jnae', 'jc',
+            'jnb', 'jae', 'jnc',
+            'jz', 'je',
+            'jnz', 'jne',
+            'jbe', 'jna',
+            'jnbe', 'ja',
+            'js',
+            'jns',
+            'jp', 'jpe',
+            'jnp', 'jpo',
+            'jl', 'jnge',
+            'jnl', 'jge',
+            'jle', 'jng',
+            'jnle', 'jg'
+        ]
+        
 class x86_64(x86):
     """x86_64 implementation of Arch
     """
@@ -126,6 +147,27 @@ class x86_64(x86):
         pop rsi
         pop rdi
         '''.format(dst, src, size)
+
+    @property
+    def jmp_mnemonics(self):
+        # see http://ref.x86asm.net/coder64.html
+        return [
+            'jo', 'jno',
+            'jb', 'jnae', 'jc',
+            'jnb', 'jae', 'jnc',
+            'jz', 'je',
+            'jnz', 'jne',
+            'jbe', 'jna',
+            'jnbe', 'ja',
+            'js', 'jns',
+            'jp', 'jpe',
+            'jnp', 'jpo',
+            'jl', 'jnge',
+            'jnl', 'jge',
+            'jle', 'jng',
+            'jnle', 'jg'
+        ]
+
 
 class arm(Arch):
     """arm arch is currently not implemented

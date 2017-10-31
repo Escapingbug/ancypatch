@@ -321,7 +321,11 @@ class Context(object):
         evicted = ''
         # eh we'll just trust that a call won't be anywhere near 64 bytes
         ins = self.dis(src)
+        # FIXME it breaks when jmpevict part has jump to evicted part
+        # currently I just notice user about it and do nothing
         for ins in ins:
+            if ins.mnemonic in self.arch.jmp_mnemonics:
+                self.warn('overwritten bytes contains jump, it may break')
             evicted += ins.bytes
             if len(evicted) >= len(call):
                 break
@@ -342,13 +346,13 @@ class Context(object):
         # 6. re-hook the patch site (and remove the jmp)
         # 7. jmp to where the tmp jmp was
 
-        # TODO MS part currently ignored by Anciety -- Anciety
+        # jmp to stage1
         emptyjmp = self.asm(self.arch.jmp(self.binary.next_alloc()), addr=src)
+        # jmp over
         jmpoff = src + len(evicted)
         jmpevict = str(self.elf.read(jmpoff, len(emptyjmp)))
 
         stage0 = evicted + jmpevict
-        # TODO: self.alloc()?
         stage1_addr = self.binary.alloc(len(stage0), target='patch')
         stage2_addr = self.binary.alloc(len(stage0), target='patch')
 
@@ -376,6 +380,7 @@ class Context(object):
         # TODO: act more like mobile substrate wrt orig calling?
         # that is, make calling orig optional
         self.patch(src, raw=stage1, is_asm=True, internal=True, desc='hook entry point')
+        
 
     def _lint(self, addr, raw, typ, is_asm=False):
         if typ == 'asm' or is_asm:

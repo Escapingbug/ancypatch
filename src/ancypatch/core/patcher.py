@@ -32,6 +32,8 @@ class Patcher(object):
             print >>sys.stderr, ' '.join(map(str, args))
 
     def patch(self):
+        # FIXME why do we have to add python scripts anyway?
+        # can't we just call this as a library?
         cwd = os.getcwd()
         try:
             for path, pathname in self.patchfiles:
