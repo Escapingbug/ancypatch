@@ -1,7 +1,7 @@
 import random
 from collections import defaultdict
 
-from util.patch.dis import irdis, IR
+from ancypatch.util.patch.dis import irdis, IR
 
 def aslr(pt, count=3):
     """patch helper of adding custom aslr

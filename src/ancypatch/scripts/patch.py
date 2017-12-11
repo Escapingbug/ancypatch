@@ -7,7 +7,7 @@ from ancypatch.core import Patcher
 from optparse import OptionParser
 
 def main():
-    parser = OptionParser(usage='Usage: patcher [options] <binary> <patchdir> [patchdir...]')
+    parser = OptionParser(usage='Usage: ancypatch [options] <binary> <patchdir> [patchdir...]')
     parser.add_option('-o', '--out', dest="out", help="output filename (default = <binary>.patched)")
     parser.add_option('-v', '--verbose', dest="verbose", action="store_true", help="verbose output")
     parser.add_option('-n', '--new', dest='new', help="create new binary from template/<new>")
